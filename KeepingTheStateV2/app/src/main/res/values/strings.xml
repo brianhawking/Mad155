@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TurningThePhone</string>
+    <string name="name">Hello, %1$s</string>
+    <string name="mode">You are in %1$s mode</string>
+</resources>
