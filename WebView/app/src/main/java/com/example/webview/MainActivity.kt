@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         webview.apply {
             loadUrl("http://www.brianveitch.com")
             settings.javaScriptEnabled = true
-
         }
     }
 
