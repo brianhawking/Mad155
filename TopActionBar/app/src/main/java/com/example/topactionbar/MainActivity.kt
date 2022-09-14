@@ -71,17 +71,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         R.id.item1 -> {
-            val intent = Intent(this, Item1::class.java).apply {
-//                putExtra(EXTRA_MESSAGE, message)
-            }
+            val intent = Intent(this, Item1::class.java)
             startActivity(intent)
             true
         }
 
         R.id.item2 -> {
-            val intent = Intent(this, Item1::class.java).apply {
-//                putExtra(EXTRA_MESSAGE, message)
-            }
+            val intent = Intent(this, Item1::class.java)
             startActivity(intent)
             true
         }
