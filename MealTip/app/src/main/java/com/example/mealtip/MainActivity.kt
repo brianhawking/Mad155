@@ -16,12 +16,14 @@
 package com.example.mealtip
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import java.text.DecimalFormat
 
 /**
@@ -49,10 +51,28 @@ class MainActivity : AppCompatActivity() {
     var tip: Double = 0.0
     var totalCost: Double = 0.0
 
+    val PREF_NAME = "settings"
+    val PREF_DARK_THEME = "dark_theme"
+    val PREF_CURRENCY = "currency"
+    var PREF_IMAGE = "image"
+
+    lateinit var currencyIcon: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        var useDarkTheme = SP.getBoolean(PREF_DARK_THEME, false)
+        currencyIcon = SP.getString(PREF_CURRENCY, "$").toString()
+        var useImage = SP.getBoolean(PREF_IMAGE, true)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (useDarkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
 
         // get user input
         val mealCost: EditText = findViewById(R.id.idText_MealCost)
@@ -65,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
             cost = mealCost.text.toString().toDouble()
             val tipString = tipGroup.selectedItem.toString()
-            val currency = DecimalFormat("$##,###.00")
+            val currency = DecimalFormat("$currencyIcon##,##0.00")
 
             when (tipString) {
                 "5%" -> tipPercentage = 0.05
@@ -84,7 +104,38 @@ class MainActivity : AppCompatActivity() {
             val costFormatted = currency.format(totalCost)
 
             result.text = "Tip: $tipFormatted, Final Cost: $costFormatted"
-
         }
+    }
+
+    override fun onResume() {
+        val SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        var useImage = SP.getBoolean(PREF_IMAGE, true)
+        currencyIcon = SP.getString(PREF_CURRENCY, "$").toString()
+
+        super.onResume()
+        val imageView = findViewById<ImageView>(R.id.idImage_money)
+
+        if (useImage) {
+            imageView.visibility = View.VISIBLE
+        } else {
+            imageView.visibility = View.GONE
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.settings, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> {
+                Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, Settings::class.java)
+                startActivity(intent)
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -4,7 +4,7 @@
     <string name="textCost">Meal Cost</string>
     <string name="buttonTip">Calculate</string>
     <string name="prompt">Select Tip</string>
-    <string name="textResult">Tip: $0.00, Cost: $0.00</string>
+    <string name="textResult">Tip: 0.00, Cost: 0.00</string>
     <string-array name="tipGroup">
         <item>5%</item>
         <item>10%</item>
