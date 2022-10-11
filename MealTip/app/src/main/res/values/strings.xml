@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MealTip</string>
+    <string name="app_title">Calculate Tip</string>
+    <string name="textCost">Meal Cost</string>
+    <string name="buttonTip">Calculate</string>
+    <string name="prompt">Select Tip</string>
+    <string name="textResult">Tip: $0.00, Cost: $0.00</string>
+    <string-array name="tipGroup">
+        <item>5%</item>
+        <item>10%</item>
+        <item>15%</item>
+        <item>20%</item>
+        <item>25%</item>
+    </string-array>
+    <string-array name="currency">
+        <item>\u0024</item>
+        <item>\u20AC</item>
+        <item>\u00A3</item>
+        <item>\u00A5</item>
+    </string-array>
+</resources>
