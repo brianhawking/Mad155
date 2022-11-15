@@ -1,0 +1,166 @@
+<!--<resources xmlns:tools="http://schemas.android.com/tools">-->
+<resources>
+
+    <style name="Theme.AppCompat.Translucent" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowIsFloating">false</item>-->
+        <item name="android:windowIsTranslucent">true</item>
+<!--        <item name="android:backgroundDimEnabled">false</item>-->
+    </style>
+
+    <style name="Coefficient">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/_0</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Operator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+
+    <style name="Variable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="NumberButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30pt</item>
+        <item name="android:layout_weight">1</item>
+        <item name="backgroundTint">?attr/numberButtonBackground</item>
+<!--        <item name="background">?attr/numberButtonBackground</item>-->
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:layout_margin">0.5pt</item>
+    </style>
+
+    <style name="EquationVariable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30pt</item>
+        <item name="android:layout_weight">1</item>
+        <item name="backgroundTint">?attr/actionButtonBackground</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_margin">0.5pt</item>
+    </style>
+
+    <style name="EquationVariableX2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30pt</item>
+        <item name="android:layout_weight">10</item>
+        <item name="backgroundTint">?attr/actionButtonBackground</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_margin">0.5pt</item>
+    </style>
+
+    <style name="RowOperationButton">
+        <item name="android:layout_height">35pt</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="layout_constraintWidth_percent">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">8pt</item>
+        <item name="backgroundTint">?attr/actionButtonBackground</item>
+    </style>
+
+    <style name="SwapButton">
+        <item name="android:layout_height">28pt</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="layout_constraintWidth_percent">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="backgroundTint">@color/numberButtonColor_0</item>
+    </style>
+
+    <style name="theme_3" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="actionButtonBackground">#1B4079</item>
+        <item name="numberButtonBackground">#8FAD88</item>
+        <item name="appBackground">#CBDF90</item>
+        <item name="colorPrimary">#1B4079</item>
+    </style>
+
+    <style name="theme_4" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="actionButtonBackground">#FF3F00</item>
+        <item name="numberButtonBackground">#FF7F11</item>
+        <item name="appBackground">#FFFFFC</item>
+        <item name="colorPrimary">#000000</item>
+    </style>
+
+    <style name="theme_5" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="actionButtonBackground">#51513D</item>
+        <item name="numberButtonBackground">#A6A867</item>
+        <item name="appBackground">#E3DCC2</item>
+        <item name="colorPrimary">#51513D</item>
+    </style>
+
+    <style name="theme_6" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="actionButtonBackground">#483A58</item>
+        <item name="numberButtonBackground">#63A088</item>
+        <item name="appBackground">#FFFFFF</item>
+        <item name="colorPrimary">#56638A</item>
+    </style>
+
+    <style name="theme_7" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="actionButtonBackground">#593837</item>
+        <item name="numberButtonBackground">#942911</item>
+        <item name="appBackground">#B5C9C3</item>
+        <item name="colorPrimary">#593837</item>
+    </style>
+
+    <style name="Theme_0.AppCompat.Translucent" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="actionButtonBackground">@color/actionButtonColor_0</item>
+        <item name="numberButtonBackground">@color/numberButtonColor_0</item>
+        <item name="appBackground">@color/backgroundColor_0</item>
+    </style>
+
+    <style name="Theme_1.AppCompat.Translucent" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="actionButtonBackground">@color/actionButtonColor_1</item>
+        <item name="numberButtonBackground">@color/numberButtonColor_1</item>
+        <item name="appBackground">@color/backgroundColor_1</item>
+    </style>
+
+    <style name="Theme_3.AppCompat.Translucent" parent="theme_3">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme_4.AppCompat.Translucent" parent="theme_4">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme_5.AppCompat.Translucent" parent="theme_5">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme_6.AppCompat.Translucent" parent="theme_6">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme_7.AppCompat.Translucent" parent="theme_7">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+</resources>
