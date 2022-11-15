@@ -3,19 +3,27 @@ package com.example.mad105project_sprint1
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.GestureDetectorCompat
+import com.example.mad105project_sprint1.enums.Direction
 import com.example.mad105project_sprint1.math.Matrix
 import com.example.mad105project_sprint1.operations.Hint
 import com.example.mad105project_sprint1.operations.Operation1
 import com.example.mad105project_sprint1.operations.Operation2
 import com.example.mad105project_sprint1.operations.Operation3
+import kotlin.math.abs
 
-class AugmentedMatrix : AppCompatActivity() {
+class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
+
+    private var gDetector: GestureDetectorCompat? = null
 
     lateinit var operation1Button: ImageButton
     lateinit var operation2Button: ImageButton
@@ -37,9 +45,10 @@ class AugmentedMatrix : AppCompatActivity() {
     // array of matrices. Keeps track of states of the matrix
     var matrices: Array<Matrix> = emptyArray()
 
-    var showPivot = true
+    var showPivot = false
     var row = 0
     var column = 0
+    lateinit var textViewResult: TextView
 
     private var resultContractForSwap = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult? ->
@@ -140,6 +149,8 @@ class AugmentedMatrix : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_augmented_matrix)
 
+        this.gDetector = GestureDetectorCompat(this, this)
+
         // get coefficients from previous activity
         val bundle: Bundle? = intent.extras
         val coefficients1 = bundle?.getStringArray("coefficients1")
@@ -202,15 +213,18 @@ class AugmentedMatrix : AppCompatActivity() {
         }
 
         pivotButton.setOnClickListener {
-            Toast.makeText(this, "Pivot pressed", Toast.LENGTH_LONG).show()
             when (showPivot) {
                 false -> {
                     pivotButton.text = "Hide Pivot"
                     showPivot = true
+                    textViewResult = findViewById(equationIDs[row][column])
+                    textViewResult.setBackgroundResource(R.drawable.my_border)
                 }
                 true -> {
                     pivotButton.text = "Show Pivot"
                     showPivot = false
+                    textViewResult = findViewById(equationIDs[row][column])
+                    textViewResult.setBackgroundColor(Color.TRANSPARENT)
                 }
             }
         }
@@ -233,7 +247,6 @@ class AugmentedMatrix : AppCompatActivity() {
             print("\n")
         }
     }
-
 
     private fun updateScreen() {
 
@@ -294,5 +307,129 @@ class AugmentedMatrix : AppCompatActivity() {
         }
     }
 
+    private fun moveBox(direction: Direction) : Boolean {
+
+        val maxNumberOfEquations = equationIDs.size - 1
+        val maxNumberOfVariables = equationIDs[0].size - 1
+
+        textViewResult = findViewById(equationIDs[row][column])
+        textViewResult.setBackgroundColor(Color.TRANSPARENT)
+
+
+        when (direction) {
+
+            Direction.UP
+            -> {
+                // move up
+                row -= 1
+                if (row < 0) {
+                    row = numberOfEquations - 1
+                }
+            }
+
+            Direction.DOWN -> {
+                // move down
+                row += 1
+                if (row == numberOfEquations) {
+                    row = 0
+                }
+            }
+
+            Direction.LEFT -> {
+                // move left
+                column -= 1
+
+                if(column < 0) {
+                    column = maxNumberOfVariables
+                }
+                if (column == maxNumberOfVariables - 1) {
+                    column = numberOfVariables - 1
+                }
+            }
+            Direction.RIGHT -> {
+                // move right
+                column += 1
+
+                if (column == numberOfVariables) {
+                    column = maxNumberOfVariables
+                }
+
+                if (column > maxNumberOfVariables) {
+                    column = 0
+                    row += 1
+                    if (row == numberOfEquations) {
+                        row = 0
+                    }
+                }
+            }
+            else -> {
+                println("ERROR")
+            }
+        }
+
+        textViewResult = findViewById(equationIDs[row][column])
+        textViewResult.setBackgroundResource(R.drawable.my_border)
+
+        return true
+    }
+
+    // GESTURES
+
+    override fun onDown(e: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return true
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            this.gDetector?.onTouchEvent(event)
+        }
+        return super.onTouchEvent(event)
+    }
+
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        if (e1 == null || e2 == null) { return false }
+        var diffY = e2.y - e1.y
+        var diffX = e2.x - e1.x
+
+        if (abs(diffX) > abs(diffY)) {
+            if (diffX > 0) {
+                moveBox(Direction.RIGHT)
+            } else {
+                moveBox(Direction.LEFT)
+            }
+        } else {
+            if (diffY > 0) {
+                moveBox(Direction.DOWN)
+            } else {
+                moveBox(Direction.UP)
+            }
+        }
+
+        return true
+    }
 
 }

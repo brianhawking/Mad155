@@ -200,7 +200,7 @@ class Operation2 : AppCompatActivity() {
                     R.id.row4Button -> {
                         initialRowImage.setImageResource(R.drawable.r4)
                         finalRowImage.setImageResource(R.drawable.r4)
-                        row = 3
+                        row = 4
                     }
                 }
             }

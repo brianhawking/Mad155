@@ -34,7 +34,6 @@
             <TextView
                 android:id="@+id/coefficientX1"
                 style="@style/Coefficient"
-                android:background="@drawable/my_border"
                 android:textSize="24sp" />
 
             <TextView
@@ -271,7 +270,7 @@
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:textSize="14sp"
-            android:text="Hide Pivot" />
+            android:text="Show Pivot" />
 
         <Button
             style="@style/EquationVariable"
