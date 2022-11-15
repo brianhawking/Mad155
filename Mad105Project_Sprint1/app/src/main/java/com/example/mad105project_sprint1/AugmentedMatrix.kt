@@ -6,10 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.mad105project_sprint1.math.Matrix
@@ -40,6 +37,10 @@ class AugmentedMatrix : AppCompatActivity() {
     // array of matrices. Keeps track of states of the matrix
     var matrices: Array<Matrix> = emptyArray()
 
+    var showPivot = true
+    var row = 0
+    var column = 0
+
     private var resultContractForSwap = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult? ->
         if((result?.resultCode == Activity.RESULT_OK)){
@@ -61,6 +62,68 @@ class AugmentedMatrix : AppCompatActivity() {
                 tempMatrix.swapRows(rowsToSwap[0],rowsToSwap[1])
                 addMatrixToMatrices(tempMatrix)
                 matrix = tempMatrix.copy()
+            }
+
+            // update screen with new matrix
+            updateScreen()
+        }
+    }
+
+    private var resultContractForConstant = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult? ->
+        if((result?.resultCode == Activity.RESULT_OK)){
+
+            // get data back from activity
+            val intent = result.data
+            val bundle: Bundle? = intent?.extras
+            val constant = bundle?.getString("constant")
+            val row = bundle?.getInt("row")
+
+            // proceed if data is valid
+            if (row != null) {
+                if (constant != null) {
+
+                    /* make copy of matrix
+                    multiply row by constant
+                    add new matrix to matrices array
+                    copy new matrix back
+                     */
+                    val tempMatrix = matrix.copy()
+                    tempMatrix.multiplyRowByConstant(row,constant)
+                    addMatrixToMatrices(tempMatrix)
+                    matrix = tempMatrix.copy()
+                }
+            }
+
+            // update screen with new matrix
+            updateScreen()
+        }
+    }
+
+    private var resultContractRowPlusConstantRow = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult? ->
+        if((result?.resultCode == Activity.RESULT_OK)){
+
+            // get data back from activity
+            val intent = result.data
+            val bundle: Bundle? = intent?.extras
+            val constant = bundle?.getString("constant")
+            val finalRow = bundle?.getInt("finalRow")
+            val pivotRow = bundle?.getInt("pivotRow")
+
+            // proceed if data is valid
+            if (pivotRow != null && finalRow != null && constant != null) {
+
+                /* make copy of matrix
+                perform operation
+                add new matrix to matrices array
+                copy new matrix back
+                 */
+                val tempMatrix = matrix.copy()
+                tempMatrix.rowPlusConstantRow(finalRow, constant, pivotRow)
+                addMatrixToMatrices(tempMatrix)
+                matrix = tempMatrix.copy()
+
             }
 
             // update screen with new matrix
@@ -112,6 +175,7 @@ class AugmentedMatrix : AppCompatActivity() {
         val operation3Button: ImageButton = findViewById(R.id.operation3Button)
         val undoButton: Button = findViewById(R.id.undoButton)
         val hintButton: Button = findViewById(R.id.hintButton)
+        val pivotButton: Button = findViewById(R.id.pivotHintButton)
 
 
         operation1Button.setOnClickListener {
@@ -122,17 +186,33 @@ class AugmentedMatrix : AppCompatActivity() {
 
         operation2Button.setOnClickListener {
             val intent = Intent(this, Operation2::class.java)
-            startActivity(intent)
+            intent.putExtra("numberOfEquations",numberOfEquations)
+            resultContractForConstant.launch(intent)
         }
 
         operation3Button.setOnClickListener {
             val intent = Intent(this, Operation3::class.java)
-            startActivity(intent)
+            intent.putExtra("numberOfEquations", numberOfEquations)
+            resultContractRowPlusConstantRow.launch(intent)
         }
 
         hintButton.setOnClickListener {
             val intent = Intent(this, Hint::class.java)
             startActivity(intent)
+        }
+
+        pivotButton.setOnClickListener {
+            Toast.makeText(this, "Pivot pressed", Toast.LENGTH_LONG).show()
+            when (showPivot) {
+                false -> {
+                    pivotButton.text = "Hide Pivot"
+                    showPivot = true
+                }
+                true -> {
+                    pivotButton.text = "Show Pivot"
+                    showPivot = false
+                }
+            }
         }
     }
 

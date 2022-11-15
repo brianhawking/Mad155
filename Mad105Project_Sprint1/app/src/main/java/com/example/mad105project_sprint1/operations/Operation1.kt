@@ -89,6 +89,7 @@ class Operation1 : AppCompatActivity() {
                     R.id.row1Button -> array[i] = 1
                     R.id.row2Button -> array[i] = 2
                     R.id.row3Button -> array[i] = 3
+                    R.id.row4Button -> array[i] = 4
                 }
             }
 
@@ -133,10 +134,10 @@ class Operation1 : AppCompatActivity() {
 
             // change image to correct row
             when(id) {
-                R.id.row1Button -> image.setImageResource(R.drawable.r1)
-                R.id.row2Button -> image.setImageResource(R.drawable.r2)
-                R.id.row3Button -> image.setImageResource(R.drawable.r3)
-                R.id.row4Button -> image.setImageResource(R.drawable.r3)
+                R.id.row1Button -> image.setImageResource(R.drawable.r12)
+                R.id.row2Button -> image.setImageResource(R.drawable.r22)
+                R.id.row3Button -> image.setImageResource(R.drawable.r32)
+                R.id.row4Button -> image.setImageResource(R.drawable.r42)
             }
         }
     }

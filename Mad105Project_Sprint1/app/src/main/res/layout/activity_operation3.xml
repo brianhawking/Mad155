@@ -35,12 +35,12 @@
                 android:text="Swipe Left or Right to move"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="10pt"
+            android:layout_height="8pt"
             android:background="@color/black" />
 
 
@@ -77,8 +77,9 @@
                 android:layout_weight=".8"
                 android:gravity="center_vertical|right"
                 android:text="0"
+                android:layout_marginTop="-7pt"
                 android:textColor="@color/black"
-                android:textSize="20pt" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/pivotRow"
@@ -246,16 +247,17 @@
                     android:text="0" />
 
                 <Button
+                    android:id="@+id/buttonCancel"
+                    style="@style/EquationVariable"
+                    android:textSize="18sp"
+                    android:text="Cancel" />
+
+                <Button
                     android:id="@+id/buttonDone"
                     style="@style/EquationVariable"
                     android:textSize="18sp"
                     android:text="Done" />
 
-                <Button
-                    android:id="@+id/buttonCancel"
-                    style="@style/EquationVariable"
-                    android:textSize="18sp"
-                    android:text="Cancel" />
 
             </LinearLayout>
 

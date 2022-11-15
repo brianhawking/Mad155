@@ -86,21 +86,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/r1" />
+            app:srcCompat="@drawable/r12" />
 
         <ImageView
             android:id="@+id/doubleArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/doublearrow" />
+            app:srcCompat="@drawable/leftrightarrow" />
 
         <ImageView
             android:id="@+id/secondRowImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/r2" />
+            app:srcCompat="@drawable/r22" />
 
     </LinearLayout>
 

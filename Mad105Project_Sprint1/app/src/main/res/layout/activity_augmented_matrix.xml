@@ -34,6 +34,7 @@
             <TextView
                 android:id="@+id/coefficientX1"
                 style="@style/Coefficient"
+                android:background="@drawable/my_border"
                 android:textSize="24sp" />
 
             <TextView
@@ -250,17 +251,31 @@
         android:orientation="horizontal"
         android:gravity="center|center_horizontal"
         android:padding="6dp"
-        android:weightSum="2">
+        android:weightSum="3">
 
         <Button
+            style="@style/EquationVariable"
             android:id="@+id/undoButton"
             android:layout_width="0dp"
             android:layout_height="25pt"
             android:layout_weight="1"
             android:layout_margin="5dp"
+            android:textSize="18sp"
             android:text="Undo" />
 
         <Button
+            style="@style/EquationVariable"
+            android:id="@+id/pivotHintButton"
+            android:layout_width="0dp"
+            android:layout_height="25pt"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textSize="14sp"
+            android:text="Hide Pivot" />
+
+        <Button
+            style="@style/EquationVariable"
+            android:textSize="18sp"
             android:id="@+id/hintButton"
             android:layout_width="0dp"
             android:layout_height="25pt"
