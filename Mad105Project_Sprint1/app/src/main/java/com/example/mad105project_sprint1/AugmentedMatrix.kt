@@ -25,10 +25,6 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     private var gDetector: GestureDetectorCompat? = null
 
-    lateinit var operation1Button: ImageButton
-    lateinit var operation2Button: ImageButton
-    lateinit var operation3Button: ImageButton
-
     var numberOfEquations: Int = 0
     var numberOfVariables: Int = 0
 
@@ -40,15 +36,53 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
     )
 
     // current matrix that's on screen
-    var matrix = Matrix()
+    private var matrix = Matrix()
 
     // array of matrices. Keeps track of states of the matrix
     var matrices: Array<Matrix> = emptyArray()
 
-    var showPivot = false
+    private var showPivot = false
     var row = 0
-    var column = 0
+    private var column = 0
     lateinit var textViewResult: TextView
+
+    private var hintLevel = 0
+
+    private var resultContractForHint = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult? ->
+        if((result?.resultCode == Activity.RESULT_OK)){
+
+            // get data back from activity
+            val intent = result.data
+            val bundle: Bundle? = intent?.extras
+            val pivotElement = bundle?.getIntArray("element")
+            hintLevel = bundle?.getInt("hintLevel")!!
+
+            textViewResult = findViewById(equationIDs[row][column])
+            textViewResult.setBackgroundColor(Color.TRANSPARENT)
+
+            showPivot = true
+            // proceed if data is valid
+            if (pivotElement != null) {
+                row = pivotElement[0]
+                column = pivotElement[1]
+                if (showPivot) {
+                    textViewResult = findViewById(equationIDs[row][column])
+                    textViewResult.setBackgroundResource(R.drawable.my_border)
+                } else {
+                    Toast.makeText(this, "Click SHOW PIVOT if you want to see the recommended pivot element.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            hintLevel += 1
+
+            if (hintLevel > 2) { hintLevel = 2 }
+
+//            Toast.makeText(this, "$hintLevel", Toast.LENGTH_LONG).show()
+
+            updateScreen()
+        }
+    }
 
     private var resultContractForSwap = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult? ->
@@ -72,6 +106,8 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
                 addMatrixToMatrices(tempMatrix)
                 matrix = tempMatrix.copy()
             }
+
+            hintLevel = 0
 
             // update screen with new matrix
             updateScreen()
@@ -104,6 +140,8 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
                 }
             }
 
+            hintLevel = 0
+
             // update screen with new matrix
             updateScreen()
         }
@@ -134,6 +172,8 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
                 matrix = tempMatrix.copy()
 
             }
+
+            hintLevel = 0
 
             // update screen with new matrix
             updateScreen()
@@ -208,8 +248,21 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
 
         hintButton.setOnClickListener {
-            val intent = Intent(this, Hint::class.java)
-            startActivity(intent)
+            val intent = Intent(this,Hint::class.java)
+            intent.putExtra("coefficients1", matrix.coefficients[0])
+            intent.putExtra("coefficients2", matrix.coefficients[1])
+            intent.putExtra("coefficients3", matrix.coefficients[2])
+            intent.putExtra("coefficients4", matrix.coefficients[3])
+            intent.putExtra("numberOfEquations", numberOfEquations)
+            intent.putExtra("numberOfVariables", numberOfVariables)
+            intent.putExtra("hintLevel", hintLevel)
+            resultContractForHint.launch(intent)
+        }
+
+        undoButton.setOnClickListener {
+            if(matrices.size > 1) {
+                removeMatrixFromMatrices()
+            }
         }
 
         pivotButton.setOnClickListener {
@@ -236,6 +289,17 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
         val mutableMatrices = matrices.toMutableList()
         mutableMatrices.add(tempMatrix)
         matrices = mutableMatrices.toTypedArray()
+    }
+
+    private fun removeMatrixFromMatrices() {
+
+        // delete last matrix from matrices
+        val mutableMatrices = matrices.toMutableList()
+        mutableMatrices.removeAt(matrices.size-1)
+        matrices = mutableMatrices.toTypedArray()
+        matrix = matrices.last()
+
+        updateScreen()
     }
 
     // print matrix to console for debugging
