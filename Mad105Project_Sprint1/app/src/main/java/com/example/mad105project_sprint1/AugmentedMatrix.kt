@@ -228,7 +228,7 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
         val hintButton: Button = findViewById(R.id.hintButton)
         val pivotButton: Button = findViewById(R.id.pivotHintButton)
 
-
+        // Listeners
         operation1Button.setOnClickListener {
             val intent = Intent(this,Operation1::class.java)
             intent.putExtra("numberOfEquations",numberOfEquations)
@@ -291,6 +291,7 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
         matrices = mutableMatrices.toTypedArray()
     }
 
+    // removes the current matrix row operation from the matrices array
     private fun removeMatrixFromMatrices() {
 
         // delete last matrix from matrices
@@ -339,6 +340,7 @@ class AugmentedMatrix : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
     }
 
+    // modify the matrix UI to hide rows and/or columns
     private fun hideRow(row: Int) {
         if (row == 3) {
             val row3: TableRow = findViewById(R.id.row3)
